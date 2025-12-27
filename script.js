@@ -94,6 +94,33 @@ document.addEventListener('DOMContentLoaded', () => {
         containerRect = container.getBoundingClientRect();
     });
 
+    // Contact Form Logic
+    const contactForm = document.getElementById('contactForm');
+    const emailInput = document.getElementById('emailInput');
+
+    if (contactForm && emailInput) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const userEmail = emailInput.value;
+            const recipients = 'Paul@PointNorth.Tech,Osa@PointNorth.Tech';
+            const subject = encodeURIComponent('Consultation Inquiry');
+            // We append the user's email for reference, although the mail client opens from their account.
+            const body = encodeURIComponent(`Hello, I'd like to chat about optimizing my firm. When can we talk?\n\n(Reference Email: ${userEmail})`);
+            
+            window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
+            
+            // Optional: Provide UI feedback
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                contactForm.reset();
+            }, 2000);
+        });
+    }
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
